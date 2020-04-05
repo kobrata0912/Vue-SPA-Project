@@ -1,13 +1,16 @@
 <template>
-  <div></div>
+	<div class="container-fluid px-0 mx-0">
+		<img
+			class="img-fluid mx-auto d-block"
+			src="/header-picture.jpg"
+			max-height="100px"
+			alt="Header Image"
+		/>
+	</div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>

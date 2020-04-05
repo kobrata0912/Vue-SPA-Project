@@ -124,7 +124,3 @@ export default {
   name: 'Contacts'
 }
 </script>
-
-<style>
-
-</style>

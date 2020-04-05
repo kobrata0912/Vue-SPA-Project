@@ -3,7 +3,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<img
-					src="repairs-picture.jpg"
+					src="/repairs/repairs-picture.jpg"
 					width="100%"
 					height="563px"
 					class="rounded mx-auto d-block"
@@ -19,21 +19,6 @@
 
 		<div class="row justify-content-center">
 			<div class="col-8 m-5 justify-content-center d-flex">
-				<!-- <div class="container mt-5" >
-					<div class="row">
-						<div id="loader">
-							<div class="dot"></div>
-							<div class="dot"></div>
-							<div class="dot"></div>
-							<div class="dot"></div>
-							<div class="dot"></div>
-							<div class="dot"></div>
-							<div class="dot"></div>
-							<div class="dot"></div>
-							<div class="loading"></div>
-						</div>
-					</div>
-				</div> -->
 				<div class="container">
 					<form>
 						<div class="form-group row">

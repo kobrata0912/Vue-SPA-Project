@@ -3,7 +3,7 @@
     <div class="container-fluid">
   <div class="row">
     <img
-      src="about-us.jpg"
+      src="/aboutus/about-us.jpg"
       width="100%"
       height="563px"
       class="rounded mx-auto d-block"
@@ -147,6 +147,17 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.container-fluid {
+    position: relative;
+    text-align: center;
+    }
+
+  .bottom-middle {
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
 </style>

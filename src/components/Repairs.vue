@@ -212,6 +212,7 @@ export default {
 </script>
 
 <style scoped>
+
 .container-fluid {
 	position: relative;
 	text-align: center;

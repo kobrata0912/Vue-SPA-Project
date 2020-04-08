@@ -20,6 +20,9 @@ export default new Vuex.Store({
 		SET_USER(state, data) {
 			state.user.data = data;
 		},
+		SET_USER_DISPLAYNAME(state, data) {
+			state.user.data.displayName = data;
+		}
 	},
 	actions: {
 		fetchUser({ commit }, user) {

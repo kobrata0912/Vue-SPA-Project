@@ -98,7 +98,7 @@
 							<div class="col-sm-10">
 								<input
 									name="firstName"
-									type="firstName"
+									type="text"
 									class="form-control"
 									id="firstName"
 									value=""
@@ -125,7 +125,7 @@
 							<div class="col-sm-10">
 								<input
 									name="lastName"
-									type="password"
+									type="text"
 									class="form-control"
 									id="lastName"
 									value=""
@@ -187,13 +187,17 @@
 import { validationMixin } from 'vuelidate';
 import { required, sameAs } from 'vuelidate/lib/validators';
 import { helpers } from 'vuelidate/lib/validators';
+import { mapGetters } from 'vuex';
+import authMixin from '../../mixins/authMixin';
+import notificationsMixin from '../../mixins/notificationsMixin';
+import store from '../../plugins/store';
 
 const passwordRegEx = helpers.regex('passwordRegEx', /^[A-Za-z0-9.-_]{8,}$/);
 const namesRegEx = helpers.regex('namesRegEx', /^[А-Яа-яA-Za-z\-']{2,}$/);
 
 export default {
 	name: 'profile',
-	mixins: [validationMixin],
+	mixins: [validationMixin, authMixin, notificationsMixin],
 	data() {
 		return {
 			firstName: '',
@@ -223,32 +227,72 @@ export default {
 		},
 	},
 	methods: {
-		passwordChangeHandler() {
+		async passwordChangeHandler() {
 			this.loading = true;
+
 			if (this.$v.password.$error || this.$v.rePassword.$error) {
 				return;
+			} else {
+				await this.firebaseChangePassword(this.password)
+					.then(async () => {
+						this.password = '';
+						this.rePassword = '';
+						this.$v.$reset();
+						await this.firebaseLogOut()
+							.then(() => {
+								this.loading = false;
+								this.successToastr(
+									'Успешна смяна на паролата. Моля, влезте отново в профила си!'
+								);
+
+								this.$router.replace({ path: '/home' });
+							})
+							.catch((error) => {
+								this.loading = false;
+								this.errorToastr(error);
+							});
+					})
+					.catch((error) => {
+						this.password = '';
+						this.rePassword = '';
+						this.$v.$reset();
+						this.loading = false;
+						this.errorToastr(error);
+					});
 			}
-			console.log('Password change successfull');
-			this.password = '';
-			this.rePassword = '';
-			this.$v.$reset();
-			setTimeout(() => {
-				this.loading = false;
-			}, 3000);
 		},
-		namesChangeHandler() {
+		async namesChangeHandler() {
 			this.loading = true;
+
 			if (this.$v.firstName.$error || this.$v.lastName.$error) {
 				return;
+			} else {
+				await this.firebaseNamesChange(`${this.firstName} ${this.lastName}`)
+					.then(() => {
+						this.loading = false;
+						store.dispatch('fetchUser', {
+							displayName: `${this.firstName} ${this.lastName}`,
+							email: this.user.data.email
+						});
+						this.successToastr('Успешна смяна на имената!');
+						this.firstName = '';
+						this.lastName = '';
+						this.$v.$reset();
+					})
+					.catch((error) => {
+						this.firstName = '';
+						this.lastName = '';
+						this.$v.$reset();
+						this.loading = false;
+						this.errorToastr(error);
+					});
 			}
-			console.log('Names change successfull');
-			this.firstName = '';
-			this.lastName = '';
-			this.$v.$reset();
-			setTimeout(() => {
-				this.loading = false;
-			}, 3000);
 		},
+	},
+	computed: {
+		...mapGetters({
+			user: 'user',
+		})
 	},
 };
 </script>

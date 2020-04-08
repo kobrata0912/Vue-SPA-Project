@@ -49,7 +49,7 @@
       </p>
     </div>
     <div class="col-2 pt-4 mt-5">
-      <img src="about-us-audi.jpg" />
+      <img src="/aboutus/about-us-audi.jpg" />
     </div>
   </div>
   <div class="row">
@@ -70,7 +70,7 @@
       </p>
     </div>
     <div class="col-2 pt-4 mt-5">
-      <img src="about-us-dkw.jpg" />
+      <img src="/aboutus/about-us-dkw.jpg" />
     </div>
   </div>
   <div class="row">
@@ -91,7 +91,7 @@
       </p>
     </div>
     <div class="col-2 pt-4 mt-5">
-      <img src="about-us-horch.jpg" />
+      <img src="/aboutus/about-us-horch.jpg" />
     </div>
   </div>
   <div class="row">
@@ -112,7 +112,7 @@
       </p>
     </div>
     <div class="col-2 pt-4 mt-5">
-      <img src="about-us-wanderer.jpg" />
+      <img src="/aboutus/about-us-wanderer.jpg" />
     </div>
   </div>
   <div class="row">
@@ -133,7 +133,7 @@
       </p>
     </div>
     <div class="col-2 pt-4 mt-5">
-      <img src="about-us-nsu.jpg" />
+      <img src="/aboutus/about-us-nsu.jpg" />
     </div>
   </div>
 </div>

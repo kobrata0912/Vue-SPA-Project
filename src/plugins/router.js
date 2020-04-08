@@ -14,15 +14,15 @@ import Carlist from '@/components/Carlist.vue';
 
 const routes =  [
     { path: '/home', name: 'Home', component: Home },
-    { path: '/aboutus', component: About },
-    { path: '/contacts', component: Contacts },
-    { path: '/user/login', component: Login },
-    { path: '/user/register', component: Register },
-    { path: '/user/profile', component: Profile },
-    { path: '/news', component: News },
-    { path: '/configurator', component: Configurator },
-    { path: '/repairs', component: Repairs },
-    { path: '/models/:modelName', component: Carlist }
+    { path: '/aboutus', name: 'About', component: About },
+    { path: '/contacts', name: 'Contacts', component: Contacts },
+    { path: '/user/login', name: 'Login', component: Login },
+    { path: '/user/register', name: 'Register', component: Register },
+    { path: '/user/profile', name: 'Profile', component: Profile },
+    { path: '/news', name: 'News', component: News },
+    { path: '/configurator', name: 'Configurator', component: Configurator },
+    { path: '/repairs', name: 'Repairs', component: Repairs },
+    { path: '/models/:modelName', name: 'Models', component: Carlist }
 ]
 
 Vue.use(VueRouter)

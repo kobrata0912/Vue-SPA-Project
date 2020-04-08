@@ -158,6 +158,7 @@ import { validationMixin } from 'vuelidate';
 import { required, sameAs } from 'vuelidate/lib/validators';
 import { helpers } from 'vuelidate/lib/validators';
 import authMixin from '../../mixins/authMixin';
+import notificationsMixin from '../../mixins/notificationsMixin';
 
 const emailRegEx = helpers.regex(
 	'emailRegEx',
@@ -168,7 +169,7 @@ const namesRegEx = helpers.regex('namesRegEx', /^[А-Яа-яA-Za-z\-']{2,}$/);
 
 export default {
 	name: 'Register',
-	mixins: [validationMixin, authMixin],
+	mixins: [validationMixin, authMixin, notificationsMixin],
 	data() {
 		return {
 			firstName: '',
@@ -177,7 +178,6 @@ export default {
 			password: '',
 			rePassword: '',
 			loading: false,
-			error: null
 		};
 	},
 	validations: {
@@ -201,6 +201,33 @@ export default {
 			required,
 			passwordRegEx,
 			sameAs: sameAs('password'),
+		},
+	},
+	methods: {
+		async registerHandler() {
+			this.loading = true;
+			this.$v.$touch();
+			if (this.$v.$error) {
+				this.loading = false;
+				return;
+			} else {
+				await this.firebaseRegister(this.email, this.password, `${this.firstName} ${this.lastName}`)
+					.then(() => {
+						this.loading = false;
+						this.successToastr('Успешна регистрация!')
+						this.$router.replace({ path: '/home' });
+					})
+					.catch((error) => {
+						this.loading = false;
+						this.firstName = '';
+						this.lastName = '';
+						this.email = '';
+						this.password = '';
+						this.rePassword = '';
+						this.$v.$reset();
+						this.errorToastr(error);
+					});
+			}
 		},
 	},
 };

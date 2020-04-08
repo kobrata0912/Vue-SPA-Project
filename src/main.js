@@ -3,9 +3,13 @@ import App from './App.vue'
 import router from '@/plugins/router'
 import * as firebase from "firebase";
 import store from "./plugins/store";
+import VueToastr from 'vue-toastr'
 
 Vue.config.productionTip = false;
-
+Vue.use(VueToastr, {
+  defaultTimeout: 3000,
+  defaultPosition: "toast-bottom-right",
+})
 const configOptions = {
   apiKey: "AIzaSyB4zD7vjAq81eI8rlNNa9ZukAI2_8B37S0",
   authDomain: "audiunofficialwebsite.firebaseapp.com",
@@ -18,11 +22,14 @@ const configOptions = {
   };
 
 firebase.initializeApp(configOptions);
+
 firebase.auth().onAuthStateChanged(user => {
   store.dispatch("fetchUser", user);
-});
+  setTimeout(() => {
+    store.dispatch("fetchUser", user);
+  }, 1000)
 
-Vue.config.productionTip = false
+});
 
 new Vue({
   render: h => h(App),

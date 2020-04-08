@@ -50,9 +50,7 @@
 				<router-link class="nav-link h4" to="/user/profile">Профил</router-link>
 			</li>
 			<li v-if="user.loggedIn" class="nav-item mx-1 shadow">
-				<a @click.prevent="signOut" class="nav-link h4"
-					>Изход {{ user.loggedIn }}</a
-				>
+				<a @click.prevent="signOut" class="nav-link h4">Изход</a>
 			</li>
 		</ul>
 	</nav>
@@ -60,7 +58,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import firebase from 'firebase';
+import authMixin from '../../mixins/authMixin';
+import notificationsMixin from '../../mixins/notificationsMixin';
 
 export default {
 	name: 'Navigation',
@@ -69,17 +68,23 @@ export default {
 			user: 'user',
 		}),
 	},
+	mixins: [authMixin, notificationsMixin],
 	methods: {
-		signOut() {
-			firebase
-				.auth()
-				.signOut()
+		async signOut() {
+			this.loading = true;
+			await this.firebaseLogOut()
 				.then(() => {
-					if (!this.$router.currentRoute.name === 'Home') {
+					this.loading = false;
+					this.successToastr('Успешно излизане');
+					if (this.$router.currentRoute.name !== 'Home') {
 						this.$router.replace({
 							path: '/home',
 						});
 					}
+				})
+				.catch((error) => {
+					this.loading = false;
+					this.errorToastr(error);
 				});
 		},
 	},

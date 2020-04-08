@@ -85,7 +85,8 @@
 import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
 import { helpers } from 'vuelidate/lib/validators';
-import authMixin from '../../mixins/authMixin.js'
+import authMixin from '../../mixins/authMixin';
+import notificationsMixin from '../../mixins/notificationsMixin';
 
 const emailRegEx = helpers.regex(
 	'emailRegEx',
@@ -95,13 +96,12 @@ const passwordRegEx = helpers.regex('passwordRegEx', /^[A-Za-z0-9.-_]{8,}$/);
 
 export default {
 	name: 'Login',
-	mixins: [validationMixin, authMixin],
+	mixins: [validationMixin, authMixin, notificationsMixin],
 	data() {
 		return {
 			email: '',
 			password: '',
 			loading: false,
-			error: null,
 		};
 	},
 	validations: {
@@ -112,6 +112,29 @@ export default {
 		password: {
 			required,
 			passwordRegEx,
+		},
+	},
+	methods: {
+		async loginHandler() {
+			this.loading = true;
+			this.$v.$touch();
+			if (this.$v.$error) {
+				return;
+			} else {
+				await this.firebaseLogin(this.email, this.password)
+					.then(() => {
+						this.loading = false;
+						this.successToastr('Успешно влизане!');
+						this.$router.replace({ path: '/home' });
+					})
+					.catch((error) => {
+						this.loading = false;
+						this.email = '';
+						this.password = '';
+						this.$v.$reset();
+						this.errorToastr(error);
+					});
+			}
 		},
 	},
 };

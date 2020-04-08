@@ -13,7 +13,7 @@ import Repairs from '@/components/Repairs.vue';
 import Carlist from '@/components/Carlist.vue';
 
 const routes =  [
-    { path: '/home', component: Home },
+    { path: '/home', name: 'Home', component: Home },
     { path: '/aboutus', component: About },
     { path: '/contacts', component: Contacts },
     { path: '/user/login', component: Login },

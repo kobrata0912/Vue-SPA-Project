@@ -38,26 +38,52 @@
 			<li class="nav-item mx-1 shadow">
 				<router-link class="nav-link h4" to="/contacts">Контакти</router-link>
 			</li>
-			<li class="nav-item mx-1 shadow">
+			<li v-if="!user.loggedIn" class="nav-item mx-1 shadow">
 				<router-link class="nav-link h4" to="/user/login">Вход</router-link>
 			</li>
-			<li class="nav-item mx-1 shadow">
+			<li v-if="!user.loggedIn" class="nav-item mx-1 shadow">
 				<router-link class="nav-link h4" to="/user/register"
 					>Регистрация</router-link
 				>
 			</li>
-			<li class="nav-item mx-1 shadow">
+			<li v-if="user.loggedIn" class="nav-item mx-1 shadow">
 				<router-link class="nav-link h4" to="/user/profile">Профил</router-link>
 			</li>
-			<li class="nav-item mx-1 shadow">
-				<router-link class="nav-link h4" to="/home">Изход</router-link>
+			<li v-if="user.loggedIn" class="nav-item mx-1 shadow">
+				<a @click.prevent="signOut" class="nav-link h4"
+					>Изход {{ user.loggedIn }}</a
+				>
 			</li>
 		</ul>
 	</nav>
 </template>
 
 <script>
-export default {};
+import { mapGetters } from 'vuex';
+import firebase from 'firebase';
+
+export default {
+	name: 'Navigation',
+	computed: {
+		...mapGetters({
+			user: 'user',
+		}),
+	},
+	methods: {
+		signOut() {
+			firebase
+				.auth()
+				.signOut()
+				.then(() => {
+					if (!this.$router.currentRoute.name === 'Home') {
+						this.$router.replace({
+							path: '/home',
+						});
+					}
+				});
+		},
+	},
+};
 </script>
 
 <style></style>

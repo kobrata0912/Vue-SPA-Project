@@ -52,7 +52,10 @@
 						Моля, въведете валидна парола!
 					</div>
 
-					<button :disabled="$v.email.$invalid || $v.password.$invalid" class="btn btn-primary">
+					<button
+						:disabled="$v.email.$invalid || $v.password.$invalid"
+						class="btn btn-primary"
+					>
 						<h5>Вход</h5>
 					</button>
 				</form>
@@ -82,41 +85,33 @@
 import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
 import { helpers } from 'vuelidate/lib/validators';
+import authMixin from '../../mixins/authMixin.js'
 
-const emailRegEx = helpers.regex('emailRegEx', /^[a-zA-Z0-9.-_]{3,}@gmail.com$/);
+const emailRegEx = helpers.regex(
+	'emailRegEx',
+	/^[a-zA-Z0-9.-_]{3,}@gmail.com$/
+);
 const passwordRegEx = helpers.regex('passwordRegEx', /^[A-Za-z0-9.-_]{8,}$/);
 
 export default {
 	name: 'Login',
-	mixins: [validationMixin],
+	mixins: [validationMixin, authMixin],
 	data() {
 		return {
 			email: '',
 			password: '',
 			loading: false,
+			error: null,
 		};
 	},
 	validations: {
 		email: {
 			required,
-			emailRegEx
+			emailRegEx,
 		},
 		password: {
 			required,
 			passwordRegEx,
-		},
-	},
-	methods: {
-		loginHandler() {
-			this.loading = true;
-			this.$v.$touch();
-			if (this.$v.$error) {
-				return;
-			}
-			console.log('Login successfull');
-			setTimeout(() => {
-				this.loading = false;
-			}, 3000)
 		},
 	},
 };

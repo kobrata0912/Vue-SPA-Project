@@ -157,6 +157,7 @@
 import { validationMixin } from 'vuelidate';
 import { required, sameAs } from 'vuelidate/lib/validators';
 import { helpers } from 'vuelidate/lib/validators';
+import authMixin from '../../mixins/authMixin';
 
 const emailRegEx = helpers.regex(
 	'emailRegEx',
@@ -167,7 +168,7 @@ const namesRegEx = helpers.regex('namesRegEx', /^[А-Яа-яA-Za-z\-']{2,}$/);
 
 export default {
 	name: 'Register',
-	mixins: [validationMixin],
+	mixins: [validationMixin, authMixin],
 	data() {
 		return {
 			firstName: '',
@@ -176,6 +177,7 @@ export default {
 			password: '',
 			rePassword: '',
 			loading: false,
+			error: null
 		};
 	},
 	validations: {
@@ -199,19 +201,6 @@ export default {
 			required,
 			passwordRegEx,
 			sameAs: sameAs('password'),
-		},
-	},
-	methods: {
-		registerHandler() {
-			this.loading = true;
-			this.$v.$touch();
-			if (this.$v.$error) {
-				return;
-			}
-			console.log('Register successfull');
-			setTimeout(() => {
-				this.loading = false;
-			}, 3000);
 		},
 	},
 };

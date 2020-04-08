@@ -21,11 +21,12 @@ const authMixin = {
 		},
 		async firebaseChangePassword(newPassword) {
 			return await firebase.auth().currentUser.updatePassword(newPassword);
-        },
-        async firebaseNamesChange(newNames) {
-            return await firebase.auth().currentUser.updateProfile({displayName: newNames})
-
-        }
+		},
+		async firebaseNamesChange(newNames) {
+			return await firebase
+				.auth()
+				.currentUser.updateProfile({ displayName: newNames });
+		},
 	},
 };
 

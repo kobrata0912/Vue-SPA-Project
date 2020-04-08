@@ -189,6 +189,7 @@ import { required, sameAs } from 'vuelidate/lib/validators';
 import { helpers } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import authMixin from '../../mixins/authMixin';
+import repairsMixin from '../../mixins/repairsMixin';
 import notificationsMixin from '../../mixins/notificationsMixin';
 import store from '../../plugins/store';
 
@@ -197,13 +198,14 @@ const namesRegEx = helpers.regex('namesRegEx', /^[А-Яа-яA-Za-z\-']{2,}$/);
 
 export default {
 	name: 'profile',
-	mixins: [validationMixin, authMixin, notificationsMixin],
+	mixins: [validationMixin, authMixin, notificationsMixin, repairsMixin],
 	data() {
 		return {
 			firstName: '',
 			lastName: '',
 			password: '',
 			rePassword: '',
+			repairs: [],
 			loading: false,
 		};
 	},
@@ -272,7 +274,7 @@ export default {
 						this.loading = false;
 						store.dispatch('fetchUser', {
 							displayName: `${this.firstName} ${this.lastName}`,
-							email: this.user.data.email
+							email: this.user.data.email,
 						});
 						this.successToastr('Успешна смяна на имената!');
 						this.firstName = '';
@@ -289,10 +291,16 @@ export default {
 			}
 		},
 	},
+	mounted() {
+		console.log(this.repairs)
+		setTimeout(() => {
+			console.log(this.repairs);
+		},2000)
+	},
 	computed: {
 		...mapGetters({
 			user: 'user',
-		})
+		}),
 	},
 };
 </script>

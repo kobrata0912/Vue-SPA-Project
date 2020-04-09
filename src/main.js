@@ -4,7 +4,13 @@ import router from '@/plugins/router';
 import store from './plugins/store';
 import VueToastr from 'vue-toastr';
 import VueFirestore from 'vue-firestore';
-
+import moment from 'moment'
+Vue.filter('formatDate', function(value) {
+      if (value) {
+        return moment.unix(String(value)).format('DD/MM/YYYY')
+      }
+	})
+	
 Vue.config.productionTip = false;
 Vue.use(VueFirestore);
 Vue.use(VueToastr, {

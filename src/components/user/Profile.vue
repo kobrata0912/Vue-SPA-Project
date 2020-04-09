@@ -161,22 +161,48 @@
 							<h4>Вашите заявки за сервизно обслужване</h4>
 						</div>
 					</div>
-					<!-- <div class="row" *ngFor="let repair of repairRequests; let i = index">
-						<div class="col-lg-12">
-							<div class="container-fluid border shadow-sm my-2">
-								<div class="row">
-									<div class="col-lg-12 justify-content-center d-flex">
-										<h5>{{ i + 1 }}. Заявка за сервиз {{ repair.location }}</h5>
+					<template v-if="repairs[0]">
+						<div class="row" v-for="(repair, i) in repairs" :key="i">
+							<div class="col-lg-12">
+								<div class="container-fluid border shadow-sm my-2 p-2">
+									<div class="row">
+										<div class="col-lg-12 justify-content-center d-flex">
+											<h5>
+												{{ i + 1 }}. Заявка за сервиз {{ repair.location }}
+											</h5>
+										</div>
 									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-12 justify-content-center d-flex">
-										<h5>Описание: {{ repair.description }}</h5>
+									<div class="row">
+										<div class="col-lg-12 justify-content-center d-flex">
+											<h5>Описание: {{ repair.description }}</h5>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12 justify-content-center d-flex">
+											<button
+												type="button"
+												class="btn btn-primary"
+												@click="deleteRepairHandler(repair)"
+											>
+												Изтрий заявката
+											</button>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div> -->
+					</template>
+					<template v-else>
+						<div class="col-lg-12">
+							<div class="container-fluid border shadow-sm my-2 p-2">
+								<div class="row">
+									<div class="col-lg-12 justify-content-center d-flex">
+										<h5>Нямате подадени заявки за сервиз!</h5>
+									</div>
+								</div>
+							</div>
+						</div>
+					</template>
 				</div>
 			</div>
 		</div>
@@ -206,7 +232,7 @@ export default {
 			password: '',
 			rePassword: '',
 			repairs: [],
-			loading: false,
+			loading: true,
 		};
 	},
 	validations: {
@@ -290,17 +316,32 @@ export default {
 					});
 			}
 		},
-	},
-	mounted() {
-		console.log(this.repairs)
-		setTimeout(() => {
-			console.log(this.repairs);
-		},2000)
+		async deleteRepairHandler(repair) {
+			this.loading = true;
+			if (!repair) {
+				return;
+			} else {
+				await this.firebaseDeleteRepair(repair)
+					.then(() => {
+						this.loading = false;
+						this.successToastr('Успешно премахната заявка');
+					})
+					.catch((error) => {
+						this.loading = false;
+						this.errorToastr(error);
+					});
+			}
+		},
 	},
 	computed: {
 		...mapGetters({
 			user: 'user',
 		}),
+	},
+	watch: {
+		repairs: function() {
+			this.loading = false;
+		},
 	},
 };
 </script>

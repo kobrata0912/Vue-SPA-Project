@@ -15,8 +15,8 @@
 					Модели
 				</a>
 				<div class="dropdown-menu">
-					<router-link class="dropdown-item" to="/models/q2">Q2</router-link>
-					<router-link class="dropdown-item" to="/models/q3">Q3</router-link>
+					<router-link class="dropdown-item" to="/models/Q2">Q2</router-link>
+					<router-link class="dropdown-item" to="/models/Q3">Q3</router-link>
 				</div>
 			</li>
 			<li class="nav-item mx-1 shadow">

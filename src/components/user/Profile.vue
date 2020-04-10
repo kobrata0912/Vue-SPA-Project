@@ -257,8 +257,11 @@ export default {
 	methods: {
 		async passwordChangeHandler() {
 			this.loading = true;
-
+			this.$v.password.$touch();
+			this.$v.rePassword.$touch();
 			if (this.$v.password.$error || this.$v.rePassword.$error) {
+				this.loading = false;
+				this.$v.$reset();
 				return;
 			} else {
 				await this.firebaseChangePassword(this.password)
@@ -291,8 +294,11 @@ export default {
 		},
 		async namesChangeHandler() {
 			this.loading = true;
-
+			this.$v.firstName.$touch();
+			this.$v.lastName.$touch();
 			if (this.$v.firstName.$error || this.$v.lastName.$error) {
+				this.loading = false;
+				this.$v.$reset();
 				return;
 			} else {
 				await this.firebaseNamesChange(`${this.firstName} ${this.lastName}`)
@@ -319,6 +325,7 @@ export default {
 		async deleteRepairHandler(repair) {
 			this.loading = true;
 			if (!repair) {
+				this.loading = false;
 				return;
 			} else {
 				await this.firebaseDeleteRepair(repair)

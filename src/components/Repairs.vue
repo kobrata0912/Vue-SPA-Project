@@ -213,6 +213,7 @@ export default {
 			this.loading = true;
 			this.$v.$touch();
 			if (this.$v.$error) {
+				this.loading = false;
 				return;
 			} else {
 				await this.firebaseCreateRepair()

@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import store from '../plugins/store';
 
 import Home from '@/components/Home.vue';
-import About from '@/components/About.vue';
+import About from '@/components/static/About.vue';
 import Contacts from '@/components/static/Contacts.vue';
 import Login from '@/components/user/Login.vue';
 import Register from '@/components/user/Register.vue';
@@ -15,7 +15,7 @@ import Carlist from '@/components/Carlist.vue';
 import NotFound from '@/components/static/Not-found.vue';
 
 async function isAuth() {
-	return await store.getters['user'].loggedIn;
+	return await store.getters.isLoggedIn;
 }
 
 const routes = [
@@ -26,36 +26,42 @@ const routes = [
 		path: '/user/login',
 		name: 'Login',
 		component: Login,
-		beforeEnter: async (to, from, next) => {
-			if (isAuth) {
-				next({ path: '/home' });
-			} else {
-				next();
-			}
+		beforeEnter: (to, from, next) => {
+			setTimeout(async () => {
+				if (await isAuth()) {
+					next({ path: '/home' });
+				} else {
+					next();
+				}
+			}, 1000);
 		}
 	},
 	{
 		path: '/user/register',
 		name: 'Register',
 		component: Register,
-		beforeEnter: async (to, from, next) => {
-			if (isAuth) {
-				next({ path: '/home' });
-			} else {
-				next();
-			}
+		beforeEnter: (to, from, next) => {
+			setTimeout(async () => {
+				if (await isAuth()) {
+					next({ path: '/home' });
+				} else {
+					next();
+				}
+			}, 1000);
 		}
 	},
 	{
 		path: '/user/profile',
 		name: 'Profile',
 		component: Profile,
-		beforeEnter: async (to, from, next) => {
-			if (isAuth) {
-				next({ path: '/user/login' });
-			} else {
-				next();
-			}
+		beforeEnter: (to, from, next) => {
+			setTimeout(async () => {
+				if (!(await isAuth())) {
+					next({ path: '/user/login' });
+				} else {
+					next();
+				}
+			}, 1000);
 		}
 	},
 	{ path: '/news', name: 'News', component: News },
@@ -63,24 +69,28 @@ const routes = [
 		path: '/configurator',
 		name: 'Configurator',
 		component: Configurator,
-		beforeEnter: async (to, from, next) => {
-			if (isAuth) {
-				next({ path: '/user/login' });
-			} else {
-				next();
-			}
+		beforeEnter: (to, from, next) => {
+			setTimeout(async () => {
+				if (!(await isAuth())) {
+					next({ path: '/user/login' });
+				} else {
+					next();
+				}
+			}, 1000);
 		}
 	},
 	{
 		path: '/repairs',
 		name: 'Repairs',
 		component: Repairs,
-		beforeEnter: async (to, from, next) => {
-			if (isAuth) {
-				next({ path: '/user/login' });
-			} else {
-				next();
-			}
+		beforeEnter: (to, from, next) => {
+			setTimeout(async () => {
+				if (!(await isAuth())) {
+					next({ path: '/user/login' });
+				} else {
+					next();
+				}
+			}, 1000);
 		}
 	},
 	{ path: '/models/:modelName', name: 'Models', component: Carlist },

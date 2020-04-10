@@ -12,6 +12,7 @@ export default new Vuex.Store({
 		user(state) {
 			return state.user;
 		},
+		isLoggedIn(state) { return state.user.loggedIn }
 	},
 	mutations: {
 		SET_LOGGED_IN(state, value) {
@@ -20,9 +21,6 @@ export default new Vuex.Store({
 		SET_USER(state, data) {
 			state.user.data = data;
 		},
-		SET_USER_DISPLAYNAME(state, data) {
-			state.user.data.displayName = data;
-		}
 	},
 	actions: {
 		fetchUser({ commit }, user) {
@@ -35,6 +33,6 @@ export default new Vuex.Store({
 			} else {
 				commit('SET_USER', null);
 			}
-		},
+		}
 	},
 });

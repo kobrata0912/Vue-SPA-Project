@@ -20,5 +20,10 @@
 <script>
 export default {
 	name: 'NotFound',
+	mounted() {
+		setTimeout(() => {
+			this.$router.replace({path: '/home'})
+		}, 5000)
+	}
 };
 </script>

@@ -8,7 +8,7 @@ const Contacts = () => import(/* webpackChunkName: "Contacts" */  "../components
 const Login = () => import(/* webpackChunkName: "Login" */ "../components/user/Login.vue");
 const Register = () => import(/* webpackChunkName: "Register" */ "../components/user/Register.vue");
 const Profile = () => import(/* webpackChunkName: "Profile" */ "../components/user/profile/Profile.vue");
-const News = () => import(/* webpackChunkName: "News" */ "../components/News.vue");
+const News = () => import(/* webpackChunkName: "News" */ "../components/News/News.vue");
 const Configurator = () => import(/* webpackChunkName: "Configurator" */ "../components/Configurator.vue");
 const Repairs = () => import(/* webpackChunkName: "Repairs" */ "../components/Repairs.vue");
 const Carlist = () => import(/* webpackChunkName: "Carlist" */ "../components/Carlist/Carlist.vue");

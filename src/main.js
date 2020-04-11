@@ -5,6 +5,8 @@ import store from './plugins/store';
 import VueToastr from 'vue-toastr';
 import VueFirestore from 'vue-firestore';
 import moment from 'moment'
+import {firebaseApp} from './firebase'
+firebaseApp;
 Vue.filter('formatDate', function(value) {
       if (value) {
         return moment.unix(String(value)).format('DD/MM/YYYY')

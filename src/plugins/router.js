@@ -11,7 +11,7 @@ const Profile = () => import(/* webpackChunkName: "Profile" */ "../components/us
 const News = () => import(/* webpackChunkName: "News" */ "../components/News.vue");
 const Configurator = () => import(/* webpackChunkName: "Configurator" */ "../components/Configurator.vue");
 const Repairs = () => import(/* webpackChunkName: "Repairs" */ "../components/Repairs.vue");
-const Carlist = () => import(/* webpackChunkName: "Carlist" */ "../components/Carlist.vue");
+const Carlist = () => import(/* webpackChunkName: "Carlist" */ "../components/Carlist/Carlist.vue");
 const NotFound = () => import(/* webpackChunkName: "NotFound" */ "../components/static/Not-found.vue");
 
 async function isAuth() {

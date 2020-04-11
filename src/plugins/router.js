@@ -3,16 +3,16 @@ import VueRouter from 'vue-router';
 import store from '../plugins/store';
 
 import Home from '@/components/Home.vue';
-import About from '@/components/static/About.vue';
-import Contacts from '@/components/static/Contacts.vue';
-import Login from '@/components/user/Login.vue';
-import Register from '@/components/user/Register.vue';
-import Profile from '@/components/user/profile/Profile.vue';
-import News from '@/components/News.vue';
-import Configurator from '@/components/Configurator.vue';
-import Repairs from '@/components/Repairs.vue';
-import Carlist from '@/components/Carlist.vue';
-import NotFound from '@/components/static/Not-found.vue';
+const About = () => import(/* webpackChunkName: "About" */ "../components/static/About.vue");
+const Contacts = () => import(/* webpackChunkName: "Contacts" */  "../components/static/Contacts.vue");
+const Login = () => import(/* webpackChunkName: "Login" */ "../components/user/Login.vue");
+const Register = () => import(/* webpackChunkName: "Register" */ "../components/user/Register.vue");
+const Profile = () => import(/* webpackChunkName: "Profile" */ "../components/user/profile/Profile.vue");
+const News = () => import(/* webpackChunkName: "News" */ "../components/News.vue");
+const Configurator = () => import(/* webpackChunkName: "Configurator" */ "../components/Configurator.vue");
+const Repairs = () => import(/* webpackChunkName: "Repairs" */ "../components/Repairs.vue");
+const Carlist = () => import(/* webpackChunkName: "Carlist" */ "../components/Carlist.vue");
+const NotFound = () => import(/* webpackChunkName: "NotFound" */ "../components/static/Not-found.vue");
 
 async function isAuth() {
 	return await store.getters.isLoggedIn;

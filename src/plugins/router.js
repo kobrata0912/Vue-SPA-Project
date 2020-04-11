@@ -7,7 +7,7 @@ import About from '@/components/static/About.vue';
 import Contacts from '@/components/static/Contacts.vue';
 import Login from '@/components/user/Login.vue';
 import Register from '@/components/user/Register.vue';
-import Profile from '@/components/user/Profile.vue';
+import Profile from '@/components/user/profile/Profile.vue';
 import News from '@/components/News.vue';
 import Configurator from '@/components/Configurator.vue';
 import Repairs from '@/components/Repairs.vue';
